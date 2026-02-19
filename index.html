@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StoreGenius - AI Dropshipping Store Builder</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #7c3aed, #db2777); min-height: 100vh; color: white; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; padding: 40px 0; }
+        .header h1 { font-size: 3em; margin-bottom: 10px; }
+        .card { background: white; color: #1f2937; border-radius: 20px; padding: 40px; margin: 20px 0; }
+        .step { display: flex; align-items: flex-start; margin: 30px 0; padding: 20px; background: #f9fafb; border-radius: 12px; }
+        .step-num { background: linear-gradient(135deg, #7c3aed, #db2777); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 20px; flex-shrink: 0; }
+        .product-card { background: #f9fafb; border-radius: 12px; padding: 20px; margin: 15px 0; border: 2px solid #e5e7eb; }
+        .btn { background: linear-gradient(135deg, #7c3aed, #db2777); color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-size: 1em; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+        .hidden { display: none !important; }
+        .input { width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1em; margin: 10px 0; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0; }
+        .stat-card { background: #f9fafb; padding: 20px; border-radius: 12px; text-align: center; }
+        .stat-value { font-size: 2em; font-weight: bold; color: #7c3aed; }
+        .preview { background: #1f2937; color: white; padding: 30px; border-radius: 12px; margin: 20px 0; }
+        .price-tag { background: #10b981; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; display: inline-block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div style="font-size: 4em;">🛍️</div>
+            <h1>StoreGenius</h1>
+            <p>AI-Powered Dropshipping Store Builder</p>
+        </div>
+
+        <!-- Setup Form -->
+        <div id="setupSection" class="card">
+            <h2 style="text-align: center; margin-bottom: 30px;">Build Your Store in 60 Seconds</h2>
+
+            <div style="margin: 20px 0;">
+                <label>What do you want to sell?</label>
+                <input type="text" class="input" id="niche" placeholder="e.g., fitness gear, pet accessories, home decor">
+            </div>
+
+            <div style="margin: 20px 0;">
+                <label>Your store name</label>
+                <input type="text" class="input" id="storeName" placeholder="e.g., FitLife Essentials">
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" onclick="generateStore()">🚀 Generate My Store</button>
+            </div>
+        </div>
+
+        <!-- Generated Store Preview -->
+        <div id="storePreview" class="hidden">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <button class="btn" onclick="reset()" style="font-size: 0.9em;">← New Store</button>
+                    <h2>Your AI-Generated Store</h2>
+                </div>
+
+                <div class="preview">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 id="previewName" style="font-size: 1.5em;">FitLife Essentials</h3>
+                        <span>🛒 Cart (0)</span>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #7c3aed, #db2777); padding: 40px; border-radius: 12px; text-align: center; margin: 20px 0;">
+                        <h2>Premium Fitness Gear</h2>
+                        <p>Free Shipping Worldwide 🌍</p>
+                    </div>
+
+                    <h4 style="margin: 20px 0;">Featured Products (Auto-imported from suppliers)</h4>
+
+                    <div id="productList">
+                        <!-- Products will be populated here -->
+                    </div>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-value">24</div>
+                        <p>Products Imported</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$12-47</div>
+                        <p>Profit Margins</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">3-5d</div>
+                        <p>Shipping Time</p>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #7c3aed, #db2777); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-top: 30px;">
+                    <h3>Launch Your Store</h3>
+                    
+                    <div style="margin: 20px 0;">
+                        <p>✓ Shopify-compatible theme</p>
+                        <p>✓ 24 products with descriptions</p>
+                        <p>✓ Supplier connections (AliExpress/Spocket)</p>
+                        <p>✓ Email automation setup</p>
+                    </div>
+                    
+                    <button style="background: white; color: #7c3aed; padding: 15px 40px; border: none; border-radius: 10px; font-size: 1.1em; cursor: pointer;">
+                        Get Store Files - $99
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; opacity: 0.9;">
+            <p>StoreGenius © 2024 • Built by Angel Army</p>
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            { name: "Resistance Bands Set", price: "$24.99", cost: "$8.50", margin: "194%" },
+            { name: "Yoga Mat Premium", price: "$39.99", cost: "$14.20", margin: "181%" },
+            { name: "Adjustable Dumbbells", price: "$89.99", cost: "$42.00", margin: "114%" },
+            { name: "Foam Roller", price: "$19.99", cost: "$6.80", margin: "194%" },
+            { name: "Gym Bag", price: "$34.99", cost: "$12.50", margin: "180%" }
+        ];
+
+        function generateStore() {
+            const niche = document.getElementById('niche').value || 'fitness gear';
+            const storeName = document.getElementById('storeName').value || niche + ' Store';
+
+            document.getElementById('setupSection').classList.add('hidden');
+            document.getElementById('storePreview').classList.remove('hidden');
+
+            document.getElementById('previewName').textContent = storeName;
+
+            let productHTML = '';
+            products.forEach(product => {
+                productHTML += `
+                    <div class="product-card" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>${product.name}</strong><br>
+                            <span style="color: #6b7280; font-size: 0.9em;">Supplier cost: ${product.cost}</span>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 1.3em; font-weight: bold; color: #7c3aed;">${product.price}</div>
+                            <span class="price-tag">+${product.margin} margin</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('productList').innerHTML = productHTML;
+        }
+
+        function reset() {
+            document.getElementById('storePreview').classList.add('hidden');
+            document.getElementById('setupSection').classList.remove('hidden');
+            document.getElementById('niche').value = '';
+            document.getElementById('storeName').value = '';
+        }
+    </script>
+</body>
+</html>
